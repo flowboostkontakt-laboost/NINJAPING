@@ -1,0 +1,25 @@
+# Python
+backend/venv/
+backend/venv312/
+**/venv*/
+.venv/
+**/__pycache__/
+*.pyc
+backend/.env
+*.env
+!*.env.example
+
+# Node / Next.js
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/.env.local
+
+# Misc
+.DS_Store
+*.log
+
+# Local tooling (kept out of the public repo)
+.claude/
+CLAUDE.md
+AGENTS.md

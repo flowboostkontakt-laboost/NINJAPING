@@ -1,0 +1,20 @@
+# Render blueprint — backend API. Frontend deploys on Vercel (see DEPLOY.md).
+services:
+  - type: web
+    name: ninjaping-backend
+    runtime: python
+    rootDir: backend
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.10"
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: CORS_ORIGINS
+        sync: false        # set to your Vercel URL, e.g. https://ninjaping.vercel.app
+      - key: FRONTEND_URL
+        sync: false        # same Vercel URL (for Raid-on-X share links)
+      - key: CRYPTOPANIC_KEY
+        sync: false        # optional: real per-token social posts

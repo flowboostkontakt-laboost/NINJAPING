@@ -1,0 +1,147 @@
+@import "tailwindcss";
+
+/* ─────────────────────────────────────────────────────────────────────────
+   NinjaPing — Cyberpunk / DeFi terminal theme
+   Background: deep matte graphite so neon AI alerts pop.
+   ───────────────────────────────────────────────────────────────────────── */
+
+:root {
+  --background: #0b0e14;
+  --background-elevated: #0e131c;
+  --foreground: #e7ecf3;
+  --border: #1c2230;
+  --border-bright: #2a3346;
+  --muted: #6b7689;
+
+  --accent-cyan: #22d3ee;
+  --emerald: #10b981;
+  --orange: #f97316;
+  --rose: #ef4444;
+  --purple: #a855f7;
+
+  /* Shadow Ninja mode overrides (injected on <html data-ninja>) */
+  --ninja-accent: #ef4444;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+* {
+  border-color: var(--border);
+}
+
+html {
+  background: var(--background);
+  color-scheme: dark;
+}
+
+body {
+  background:
+    radial-gradient(900px 500px at 12% -8%, rgba(34, 211, 238, 0.07), transparent 60%),
+    radial-gradient(900px 600px at 100% 0%, rgba(168, 85, 247, 0.06), transparent 55%),
+    var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+/* Faint engineering grid behind everything */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(circle at 50% 0%, black, transparent 85%);
+}
+
+/* ── Shadow Ninja mode: drifting red smoke + sharper accents ─────────────── */
+html[data-ninja="true"] body {
+  background:
+    radial-gradient(1000px 600px at 80% -10%, rgba(239, 68, 68, 0.13), transparent 55%),
+    radial-gradient(800px 500px at 0% 100%, rgba(239, 68, 68, 0.08), transparent 60%),
+    var(--background);
+}
+html[data-ninja="true"] body::after {
+  content: "";
+  position: fixed;
+  inset: -20% -20% -20% -20%;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(closest-side, rgba(239, 68, 68, 0.10), transparent 70%);
+  filter: blur(40px);
+  animation: smoke-drift 16s ease-in-out infinite alternate;
+}
+
+/* ── Animations ─────────────────────────────────────────────────────────── */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 currentColor; }
+  50% { opacity: 0.55; box-shadow: 0 0 0 4px transparent; }
+}
+@keyframes scan-bar {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(220%); }
+}
+@keyframes blink-caret {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+@keyframes smoke-drift {
+  from { transform: translate(0, 0) scale(1); }
+  to { transform: translate(-6%, 4%) scale(1.15); }
+}
+@keyframes card-in {
+  from { opacity: 0; transform: translateY(-14px) scale(0.985); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes flash-ring {
+  0% { box-shadow: 0 0 0 0 var(--flash, rgba(34,211,238,0.5)); }
+  100% { box-shadow: 0 0 0 18px transparent; }
+}
+@keyframes boot-line {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-pulse-dot { animation: pulse-dot 1.4s ease-in-out infinite; }
+.card-in { animation: card-in 0.45s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.flash-ring { animation: flash-ring 1.1s ease-out 1; }
+.caret { animation: blink-caret 1s step-end infinite; }
+
+.scanline {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+}
+.scanline::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 35%;
+  background: linear-gradient(90deg, transparent, rgba(34, 211, 238, 0.18), transparent);
+  animation: scan-bar 1.1s linear infinite;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 9px; height: 9px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-bright); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: #3a455c; }
+
+.glass {
+  background: linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0));
+  backdrop-filter: blur(8px);
+}
