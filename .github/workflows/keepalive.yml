@@ -1,0 +1,17 @@
+name: keep-alive
+
+# Pings the Render backend so the free instance never spins down,
+# keeping the public demo link instant for judges.
+on:
+  schedule:
+    - cron: "*/10 * * * *"   # every 10 minutes
+  workflow_dispatch: {}        # allow manual run from the Actions tab
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wake backend
+        run: |
+          curl -fsS --max-time 90 --retry 4 --retry-delay 12 --retry-all-errors \
+            https://ninjaping-backend.onrender.com/api/status || true
