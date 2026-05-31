@@ -5,7 +5,7 @@ import type { Pulse } from "@/lib/types";
 import { PulseCard } from "@/components/PulseCard";
 
 const API =
-  process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "") || "http://localhost:8000";
+  process.env.NEXT_PUBLIC_API_URL?.trim().replace(/\/$/, "") || "http://localhost:8000";
 
 async function getPulse(id: string): Promise<Pulse | null> {
   try {

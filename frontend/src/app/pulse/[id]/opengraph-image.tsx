@@ -6,7 +6,7 @@ export const contentType = "image/png";
 export const alt = "NinjaPing AI pulse";
 
 const API =
-  process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "") || "http://localhost:8000";
+  process.env.NEXT_PUBLIC_API_URL?.trim().replace(/\/$/, "") || "http://localhost:8000";
 
 const TYPE: Record<string, { label: string; color: string }> = {
   BUY: { label: "WHALE ACCUMULATION", color: "#10b981" },
